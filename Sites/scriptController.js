@@ -1,9 +1,15 @@
 var myAppModule = angular.module("myApp", []);
 
-myAppModule.controller('mainController', function() //controller for the view; constructor function
+myAppModule.controller('mainController', function($scope) //controller for the view; constructor function
 {
-
-})
+	var employee = {
+		firstName: "David",
+		lastName: "Hastings",
+	};
+	$scope.message = "I love Steinway pianos!";
+	$scope.employee = employee; //attached the employee to the scope
+	//we will use data binding expressions in the view (the html)    {{  }}
+})  //  employee is actually called a model
 
 //ng_controller was used to attach the controller to the DOM , instantiates it too using the Ctor
 //a new child scope will be created and made available as an injectable parameter to the ctor function!
