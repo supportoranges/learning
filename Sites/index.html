@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="APP">
+	<head>
+		<meta charset="UTF-8">
+		<title>routing</title>
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.min.css"/>
+	</head>
+	<body>
+	
+	<div class="container">
+		<div class="main">
+			<div ng-controller="directoryController">
+				<div ng-view></div>
+			</div>	
+		</div>
+	</div>
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.js"></script>
+	
+		<script>
+		//i have noticed on occasion the need to retype part of the source to make the code work!
+		angular.module('APP',[]) //dot required because else you get config is not defined
+	
+		.config(function($routeProvider){  //this is a configuration of the routing ONLY
+			$routeProvider.
+			when('/', { templateUrl: 'partials/directory.html'}). //when we are in the root directory
+			when('/view/:id', { templateUrl:'/partials/view.html', controller:'viewController'}).	
+			otherwise({redirectTo:'/'});
+		})
+              //promises give ability to flatten and chain potentially complex series of ajax calls.
+              //trying to chain off a success handler is problematic.
+              //success returns original promise instead of returning a new derived promise.
+		.controller('directoryController',['$scope','$http',function($scope,$http){
+			$http.get('data.js').success(function(data){ //   /data.js with slash breaks the pgm
+				$scope.people=data //success function is asynchronous called later after server answers
+				//i think success is a callback so you can't step through it like normal.
+				//additionally, his whole scheme only works because angular understand JSON data format.
+			})  //success is a function to be run when the request succeeds.
+		}]). //convenience wrappers success and error for promise handling have been deprecated
+		controller('viewController',['$scope', '$routeParams', function($scope,$routeParams	){
+			$scope.person=$scope.people[$routeParams.id]
+		}])
+		</script>
+
+	</body>
+</html>

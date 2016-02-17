@@ -1,0 +1,24 @@
+				<!-- ANGULAR automatically supplies an $index for the array it is cycling through 
+					There are ways in HTML 5 where you won't have the '#' symbol - later
+					The pound seems to be a relic of the older technology
+
+					to bring up the webpage on OSX
+					http://new-host.home/~techsupport/module3x
+				-->
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Phone</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="person in people">
+			<td>
+				<a href="/#/view/{{$index}}">{{person.fname}} {{person.lname}}</a>
+			</td>
+			<td>{{ person.tel }} </td>
+		</tr>
+	</tbody>
+</table>
